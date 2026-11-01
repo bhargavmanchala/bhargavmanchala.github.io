@@ -1,0 +1,14 @@
+---
+import Base from '../layouts/Base.astro';
+import BackButton from '../components/BackButton.astro';
+---
+
+<Base title="Not found" noindex>
+  <div class="page">
+    <BackButton href="/" />
+    <header class="page-head">
+      <h1>Page not found</h1>
+      <p>That page doesn't exist. <a href="/">Back to the home page</a>.</p>
+    </header>
+  </div>
+</Base>

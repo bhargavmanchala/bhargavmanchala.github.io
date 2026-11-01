@@ -1,0 +1,32 @@
+---
+import Base from '../../../layouts/Base.astro';
+import PostList from '../../../components/PostList.astro';
+import { getPosts } from '../../../lib/blog';
+import BackButton from '../../../components/BackButton.astro';
+import { categoryInfo } from '../../../data/categories';
+import { blogEnabled } from '../../../data/site.js';
+
+export async function getStaticPaths() {
+  if (!blogEnabled) return []; // blog is disabled: publish no category pages
+  const posts = await getPosts();
+  const slugs = [...new Set(posts.map((p) => p.category))];
+  return slugs.map((category) => ({
+    params: { category },
+    props: { category, allPosts: posts, posts: posts.filter((p) => p.category === category) },
+  }));
+}
+
+const { category, posts, allPosts } = Astro.props;
+const info = categoryInfo(category);
+---
+
+<Base title={`${info.title} | Blog`} description={info.description || `Posts in ${info.title}.`}>
+  <div class="page">
+    <BackButton href="/blog/" />
+    <header class="page-head">
+      <h1>{info.title}</h1>
+      {info.description && <p>{info.description}</p>}
+    </header>
+    <PostList posts={posts} allPosts={allPosts} active={category} />
+  </div>
+</Base>

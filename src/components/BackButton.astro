@@ -1,0 +1,28 @@
+---
+import Icon from './Icon.astro';
+
+interface Props {
+  href: string; // where to go when there is no browser history to return to
+  label?: string;
+}
+
+const { href, label = 'Back' } = Astro.props;
+---
+
+<div class="backbar no-print">
+  <a class="back-btn" href={href} data-back><Icon name="arrow-left" /> {label}</a>
+</div>
+
+<script is:inline>
+  // Go back to the page the visitor came from; fall back to the link if they arrived directly.
+  document.querySelectorAll('[data-back]').forEach(function (a) {
+    a.addEventListener('click', function (e) {
+      try {
+        if (document.referrer && new URL(document.referrer).origin === location.origin && history.length > 1) {
+          e.preventDefault();
+          history.back();
+        }
+      } catch (err) {}
+    });
+  });
+</script>

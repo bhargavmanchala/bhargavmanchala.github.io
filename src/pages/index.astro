@@ -1,0 +1,69 @@
+---
+import Base from '../layouts/Base.astro';
+import Portrait from '../components/Portrait.astro';
+import Icon from '../components/Icon.astro';
+import { profile, projects } from '../data/profile';
+
+const featured = projects.slice(0, 2);
+---
+
+<Base>
+  <section class="hero">
+    <div class="container">
+      <div>
+        <h1>{profile.name}</h1>
+        <p class="role">{profile.title}</p>
+        <p class="lead">I turn open-ended problems into working AI products.</p>
+        <div class="cta">
+          <a class="btn btn-primary" href="/website/">View my work <Icon name="arrow-right" /></a>
+          <a class="btn" href="/resume/">Résumé</a>
+          <a class="btn" href={`mailto:${profile.email}`}><Icon name="mail" /> Contact</a>
+        </div>
+      </div>
+      <Portrait />
+    </div>
+  </section>
+
+  <section class="section intro" style="padding-top: 24px;">
+    <div class="container">
+      <p>
+        I work on agentic AI and voice agents, taking ideas from research and prototype to finished
+        products. I am a Senior Innovation Engineer at {profile.company}, where I started as an intern
+        in March 2025.
+      </p>
+    </div>
+  </section>
+
+  <section class="section alt" id="featured">
+    <div class="container">
+      <div class="section-head">
+        <h2>Featured work</h2>
+      </div>
+      <ul class="featured">
+        {featured.map((p) => (
+          <li>
+            <a href="/website/#projects">
+              <div>
+                <h3>{p.name}</h3>
+                <p>{p.blurb}</p>
+              </div>
+              <span class="go">Read more <Icon name="arrow-right" /></span>
+            </a>
+          </li>
+        ))}
+      </ul>
+    </div>
+  </section>
+
+  <section class="contact" id="contact">
+    <div class="container">
+      <h2>Get in touch</h2>
+      <p>Happy to talk about agentic AI, voice agents and building AI products.</p>
+      <div class="cta">
+        <a class="btn" href={`mailto:${profile.email}`}><Icon name="mail" /> {profile.email}</a>
+        <a class="btn ghost" href={profile.linkedin} target="_blank" rel="noopener noreferrer"><Icon name="linkedin" /> LinkedIn</a>
+        <a class="btn ghost" href={profile.github} target="_blank" rel="noopener noreferrer"><Icon name="github" /> GitHub</a>
+      </div>
+    </div>
+  </section>
+</Base>

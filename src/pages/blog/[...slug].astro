@@ -1,0 +1,61 @@
+---
+import Base from '../../layouts/Base.astro';
+import BackButton from '../../components/BackButton.astro';
+import { render } from 'astro:content';
+import { getPosts, formatDate } from '../../lib/blog';
+import { categoryInfo } from '../../data/categories';
+import { blogEnabled } from '../../data/site.js';
+
+export async function getStaticPaths() {
+  if (!blogEnabled) return []; // blog is disabled: publish no posts
+  const posts = await getPosts();
+  return posts.map((post) => ({
+    params: { slug: post.id },
+    props: { post, related: posts.filter((p) => p.category === post.category && p.id !== post.id).slice(0, 3) },
+  }));
+}
+
+const { post, related } = Astro.props;
+const { Content } = await render(post);
+const info = categoryInfo(post.category);
+---
+
+<Base title={post.data.title} description={post.data.description}>
+  <article class="page">
+    <BackButton href="/blog/" />
+    <header class="page-head">
+      <p class="post-cat"><a href={`/blog/category/${post.category}/`}>{info.title}</a></p>
+      <h1>{post.data.title}</h1>
+      <p class="post-meta">
+        <time datetime={post.data.date.toISOString()}>{formatDate(post.data.date)}</time>
+        · {post.minutes} min read
+        {post.data.updated && <> · Updated {formatDate(post.data.updated)}</>}
+      </p>
+      {post.data.tags.length > 0 && (
+        <ul class="post-tags">
+          {post.data.tags.map((t) => <li>{t}</li>)}
+        </ul>
+      )}
+    </header>
+
+    <div class="prose">
+      <Content />
+    </div>
+
+    {related.length > 0 && (
+      <aside class="related">
+        <h2>More in {info.title}</h2>
+        <ul class="posts">
+          {related.map((r) => (
+            <li>
+              <a href={`/blog/${r.id}/`}>
+                <span class="meta">{formatDate(r.data.date)} · {r.minutes} min read</span>
+                <span class="t">{r.data.title}</span>
+              </a>
+            </li>
+          ))}
+        </ul>
+      </aside>
+    )}
+  </article>
+</Base>

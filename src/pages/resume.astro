@@ -1,0 +1,97 @@
+---
+import Base from '../layouts/Base.astro';
+import BackButton from '../components/BackButton.astro';
+import { profile, projects, roles, skills, education, other } from '../data/profile';
+import '../styles/resume.css';
+---
+
+<Base
+  title="Résumé"
+  description="Résumé of Bhargav Manchala, Senior Innovation Engineer - Agentic AI: TalentXpress.ai, VoiceAngles, and 15+ agentic AI use cases."
+>
+  <div class="page">
+    <BackButton href="/" />
+
+    <header class="resume-head">
+      <h1>{profile.name}</h1>
+      <p class="title">{profile.title}</p>
+      <p class="loc">{profile.location}</p>
+      <div class="contact-links">
+        <a href={`mailto:${profile.email}`}>{profile.email}</a>
+        <a href={profile.linkedin} target="_blank" rel="noopener noreferrer">LinkedIn</a>
+        <a href={profile.github} target="_blank" rel="noopener noreferrer">GitHub</a>
+        <a href="/website/">Website</a>
+      </div>
+    </header>
+
+    <section class="summary">
+      <p>
+        Senior Innovation Engineer working on agentic AI and voice agents. I take AI use cases from an
+        open problem through research, prototyping and demos to finished products: 15+ use cases built
+        and 65+ demos delivered across 15+ organizations. I led a team of 4 engineers on TalentXpress.ai
+        and received the Ascend Quality Delivery: Safe Hands award.
+      </p>
+    </section>
+
+    <section class="r-section" id="projects">
+      <h2>Key projects</h2>
+      {projects.map((p) => (
+        <article class="entry">
+          <h3>{p.href ? <a href={p.href} target="_blank" rel="noopener noreferrer">{p.name}</a> : p.name}</h3>
+          <p class="sub">{p.kind} · {p.role}</p>
+          <ul class="bullets">
+            {p.bullets.map((b) => <li>{b}</li>)}
+          </ul>
+          <p class="stack"><b>Stack</b> · {p.stack}</p>
+        </article>
+      ))}
+    </section>
+
+    <section class="r-section" id="experience">
+      <h2>Professional experience</h2>
+      <div class="company">{profile.company} <span>Hyderabad, Telangana</span></div>
+      {roles.map((r) => (
+        <article class="entry">
+          <div class="entry-head">
+            <h3>{r.current && <span class="badge">Current</span>}{r.title}</h3>
+            <span class="dates">{r.dates}</span>
+          </div>
+          <ul class="bullets">
+            {r.bullets.map((b) => <li>{b}</li>)}
+          </ul>
+        </article>
+      ))}
+    </section>
+
+    <section class="r-section" id="skills">
+      <h2>Skills</h2>
+      <dl class="skill-table" style="margin: 0;">
+        {skills.map(([k, v]) => (
+          <div><dt>{k}</dt><dd>{v.join(' · ')}</dd></div>
+        ))}
+      </dl>
+    </section>
+
+    <section class="r-section" id="education">
+      <h2>Education</h2>
+      <article class="entry">
+        <div class="entry-head">
+          <h3>{education.degree}</h3>
+          <span class="dates">{education.year}</span>
+        </div>
+        <p class="sub">{education.school} · {education.detail}</p>
+      </article>
+    </section>
+
+    <section class="r-section" id="other">
+      <h2>Other</h2>
+      <article class="entry">
+        <div class="entry-head">
+          <h3>{other.title}</h3>
+          <span class="dates">{other.dates}</span>
+        </div>
+        <p class="sub">{other.detail}</p>
+      </article>
+    </section>
+  </div>
+</Base>

@@ -1,0 +1,39 @@
+/* Résumé page content. Colours, font, type scale and spacing all come from site.css,
+   so the résumé matches the rest of the site exactly. */
+
+.resume-head { text-align: center; padding: var(--space-6) 0 var(--space-5); border-bottom: 1px solid var(--line); }
+.resume-head h1 { font-size: var(--fs-h1-page); font-weight: 700; }
+.resume-head .title { font-size: var(--fs-lg); font-weight: 600; color: var(--blue); margin: var(--space-3) 0 0; }
+.resume-head .loc { color: var(--muted); margin: var(--space-1) 0 0; }
+.contact-links { display: flex; flex-wrap: wrap; justify-content: center; gap: var(--space-2) var(--space-5); margin-top: var(--space-4); font-size: var(--fs-sm); font-weight: 500; }
+
+.summary p { max-width: 80ch; font-size: var(--fs-lg); line-height: 1.75; margin: var(--space-5) 0 0; }
+
+.r-section { margin-top: var(--space-6); }
+.r-section > h2 { font-size: var(--fs-h2); font-weight: 700; padding-bottom: var(--space-3); border-bottom: 1px solid var(--line); margin-bottom: var(--space-5); }
+
+.company { display: flex; justify-content: space-between; align-items: baseline; flex-wrap: wrap; gap: var(--space-2); font-size: var(--fs-lg); font-weight: 600; color: var(--heading); margin-bottom: var(--space-4); }
+.company span { font-size: var(--fs-sm); font-weight: 400; color: var(--muted); }
+
+.entry { margin-bottom: var(--space-5); break-inside: avoid; }
+.entry-head { display: flex; justify-content: space-between; align-items: baseline; flex-wrap: wrap; gap: var(--space-3); }
+.entry h3 { font-size: var(--fs-h3); font-weight: 600; }
+.entry .dates { color: var(--muted); font-size: var(--fs-sm); font-weight: 500; white-space: nowrap; }
+.entry .sub { color: var(--muted); font-size: var(--fs-sm); margin: var(--space-1) 0 0; }
+.badge { display: inline-block; margin-right: var(--space-2); padding: 2px 8px; border-radius: 999px; background: var(--blue-soft); color: var(--blue); font-size: 0.68rem; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; vertical-align: 2px; }
+
+.bullets { margin-top: var(--space-2); max-width: 84ch; }
+.bullets li { position: relative; padding: var(--space-1) 0 var(--space-1) 20px; font-size: 0.95rem; line-height: 1.6; }
+.bullets li::before { content: ''; position: absolute; left: 2px; top: 13px; width: 6px; height: 6px; border-radius: 50%; background: var(--blue); }
+
+.stack { margin: var(--space-2) 0 0; font-size: var(--fs-sm); color: var(--muted); }
+.stack b { color: var(--heading); font-weight: 600; }
+
+/* Printing / saving as PDF from the browser: drop the site chrome, keep the same typography. */
+@media print {
+  .site-header, .site-footer, .backbar, .skip, .no-print { display: none !important; }
+  body { font-size: 10.5pt; }
+  .page { padding: 0; }
+  .r-section { margin-top: 18px; }
+  a { color: inherit; }
+}

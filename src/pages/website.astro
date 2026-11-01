@@ -1,0 +1,89 @@
+---
+import Base from '../layouts/Base.astro';
+import Icon from '../components/Icon.astro';
+import BackButton from '../components/BackButton.astro';
+import { profile, projects, roles, skills, education } from '../data/profile';
+---
+
+<Base
+  title="Work"
+  description="Selected projects and experience of Bhargav Manchala: TalentXpress.ai, VoiceAngles and LLMOps AppDesign."
+>
+  <div class="container"><BackButton href="/" /></div>
+
+  <section class="section" id="projects" style="padding-top: 32px;">
+    <div class="container">
+      <div class="section-head">
+        <h2>Selected projects</h2>
+      </div>
+      <div class="projects">
+        {projects.map((p, i) => (
+          <article class:list={['p-card', { wide: i === projects.length - 1 }]}>
+            <h3>{p.name}</h3>
+            <p class="role">{p.kind} · {p.role}</p>
+            <p class="blurb">{p.blurb}</p>
+            <ul class="ticks">
+              {p.bullets.map((b) => <li>{b}</li>)}
+            </ul>
+            <p class="stack"><b>Stack</b> · {p.stack}</p>
+            {p.href && <a class="p-link" href={p.href} target="_blank" rel="noopener noreferrer">Visit {new URL(p.href).hostname} <Icon name="arrow-up-right" /></a>}
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="section alt" id="experience">
+    <div class="container">
+      <div class="section-head">
+        <h2>Experience</h2>
+        <p>{profile.company}, Hyderabad</p>
+      </div>
+      <ol class="timeline">
+        {roles.map((r) => (
+          <li>
+            <span class="when">{r.dates}</span>
+            <div>
+              <h3>{r.title}</h3>
+              <ul class="ticks">
+                {r.bullets.map((b) => <li>{b}</li>)}
+              </ul>
+            </div>
+          </li>
+        ))}
+        <li>
+          <span class="when">{education.year}</span>
+          <div>
+            <h3>{education.degree}</h3>
+            <p class="org">{education.school} · {education.detail}</p>
+          </div>
+        </li>
+      </ol>
+    </div>
+  </section>
+
+  <section class="section" id="skills">
+    <div class="container">
+      <div class="section-head">
+        <h2>Toolkit</h2>
+      </div>
+      <dl class="skill-table" style="margin: 0;">
+        {skills.map(([k, v]) => (
+          <div><dt>{k}</dt><dd>{v.join(' · ')}</dd></div>
+        ))}
+      </dl>
+    </div>
+  </section>
+
+  <section class="contact" id="contact">
+    <div class="container">
+      <h2>Get in touch</h2>
+      <p>Happy to talk about agentic AI, voice agents and building AI products.</p>
+      <div class="cta">
+        <a class="btn" href={`mailto:${profile.email}`}><Icon name="mail" /> {profile.email}</a>
+        <a class="btn ghost" href={profile.linkedin} target="_blank" rel="noopener noreferrer"><Icon name="linkedin" /> LinkedIn</a>
+        <a class="btn ghost" href={profile.github} target="_blank" rel="noopener noreferrer"><Icon name="github" /> GitHub</a>
+      </div>
+    </div>
+  </section>
+</Base>

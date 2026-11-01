@@ -1,0 +1,31 @@
+---
+import Base from '../../layouts/Base.astro';
+import PostList from '../../components/PostList.astro';
+import BackButton from '../../components/BackButton.astro';
+import { getPosts } from '../../lib/blog';
+import { blogEnabled } from '../../data/site.js';
+
+const posts = blogEnabled ? await getPosts() : [];
+---
+
+<Base
+  title="Blog"
+  description="Notes on agentic AI, voice agents and building AI products."
+  noindex={!blogEnabled}
+>
+  <div class="page">
+    <BackButton href="/" />
+    <header class="page-head">
+      <h1>Blog {!blogEnabled && <span class="soon">Soon</span>}</h1>
+      <p>Notes on agentic AI, voice agents and building AI products.</p>
+    </header>
+    {blogEnabled ? (
+      <PostList posts={posts} allPosts={posts} />
+    ) : (
+      <div class="coming-soon">
+        <h2>Coming soon</h2>
+        <p>The blog and notes are being set up. The first posts will appear here.</p>
+      </div>
+    )}
+  </div>
+</Base>

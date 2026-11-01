@@ -1,0 +1,17 @@
+---
+import { Image } from 'astro:assets';
+import profile from '../assets/profile.png';
+---
+
+<div class="portrait">
+  <Image
+    src={profile}
+    alt="Portrait of Bhargav Manchala"
+    width={340}
+    densities={[1, 2]}
+    format="webp"
+    quality={80}
+    loading="eager"
+    fetchpriority="high"
+  />
+</div>
